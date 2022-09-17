@@ -35,18 +35,30 @@ https://github.com/arksine/moonraker
 
   `ExecStart=/home/pi/klippy-env/bin/python /home/pi/klipper/klippy/klippy.py /home/pi/klipper_config/printer.cfg -l /home/pi/klipper_logs/klippy.log -a /tmp/klippy_uds`
 
-### Library requirements 
+### Library Requirements 
 
   Thanks to [wolfstlkr](https://www.reddit.com/r/ender3v2/comments/mdtjvk/octoprint_klipper_v2_lcd/gspae7y)
 
-  `sudo apt-get install python3-pip python3-gpiozero python3-serial git`
+Install System Requirements
 
-  `sudo pip3 install multitimer`
+```shell
+sudo apt-get install python3-pip python3-gpiozero python3-serial git
+```
 
-  `git clone https://github.com/bustedlogic/DWIN_T5UIC1_LCD.git`
+Install Python Requirements
+
+```shell
+sudo pip3 install multitimer
+```
+  
+### Clone This Repo
+
+```shell
+git clone https://github.com/mkocot/DWIN_T5UIC1_LCD.git
+```
 
 
-### Wire the display 
+### Wire The Display 
   * Display <-> Raspberry Pi GPIO BCM
   * 1  - Nc
   * 2  - Nc
@@ -78,6 +90,7 @@ Enter the downloaded DWIN_T5UIC1_LCD folder.
 Make new file run.py and copy/paste in the following (pick one)
 
 For an Ender3v2
+
 ```python
 #!/usr/bin/env python3
 from dwinlcd import DWIN_LCD
@@ -96,6 +109,7 @@ DWINLCD = DWIN_LCD(
 ```
 
 If your control wheel is reversed (Voxelab Aquila) use this instead.
+
 ```python
 #!/usr/bin/env python3
 from dwinlcd import DWIN_LCD
@@ -120,20 +134,23 @@ Run with `python3 ./run.py`
 	Note: Delay of 30s after boot to allow webservices to settal.
 	
 	path of `run.py` is expected to be `/home/pi/DWIN_T5UIC1_LCD/run.py`
+	
+	
+```shell
+sudo chmod +x run.py  
+sudo chmod +x simpleLCD.service  
+sudo mv simpleLCD.service /lib/systemd/system/simpleLCD.service  
+sudo chmod 644 /lib/systemd/system/simpleLCD.service  
+sudo systemctl daemon-reload  
+sudo systemctl enable simpleLCD.service
+```
 
-   `sudo chmod +x run.py`
-   
-   `sudo chmod +x simpleLCD.service`
-   
-   `sudo mv simpleLCD.service /lib/systemd/system/simpleLCD.service`
-   
-   `sudo chmod 644 /lib/systemd/system/simpleLCD.service`
-   
-   `sudo systemctl daemon-reload`
-   
-   `sudo systemctl enable simpleLCD.service`
-   
-   `sudo reboot`
+Reboot the Pi
+
+```shell
+sudo reboot
+```
+
    
    
 
